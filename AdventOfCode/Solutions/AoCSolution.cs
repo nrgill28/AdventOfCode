@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace AdventOfCode2020
+namespace AdventOfCode
 {
     /// <summary>
     ///     Represents a day in the Advent of Code challenge

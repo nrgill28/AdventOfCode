@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace AdventOfCode2020
+namespace AdventOfCode
 {
     [AoCSolution(Year = 2019, Day = 1, Name = "The Tyranny of the Rocket Equation")]
     public class AoC2019Day1 : AoCSolution

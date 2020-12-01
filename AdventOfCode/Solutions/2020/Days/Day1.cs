@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace AdventOfCode2020
+namespace AdventOfCode
 {
     /// <summary>
     ///     Advent of Code Day 1

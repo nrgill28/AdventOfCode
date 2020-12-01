@@ -2,7 +2,7 @@
 using System.Linq;
 using Colorful;
 
-namespace AdventOfCode2020
+namespace AdventOfCode
 {
     internal static class Program
     {
