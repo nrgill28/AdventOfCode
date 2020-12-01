@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdventOfCode
 {
@@ -10,8 +11,12 @@ namespace AdventOfCode
         private int _ip = 0;
         private int _clock;
 
-        public Queue<int> Input = new();
+        private IntcodeComputer _inputRef;
+
+        private Queue<int> _input = new();
         public Queue<int> Output = new();
+
+        public string Name;
         
         public bool Halted { get; private set; } = false;
         public bool WaitingForInput { get; private set; } = false;
@@ -36,15 +41,16 @@ namespace AdventOfCode
             }
         }
 
-        public IntcodeComputer(int[] program)
+        public IntcodeComputer(int[] program, string name = null)
         {
             _program = program;
             Reset();
+            Name = name;
         }
 
         public void RunUntilHalt()
         {
-            while (!Halted) Step();
+            while (!Halted && !WaitingForInput) Step();
         }
 
         public void Step()
@@ -124,18 +130,48 @@ namespace AdventOfCode
             Halted = false;
             _ip = 0;
             _clock = 0;
+            _input.Clear();
         }
 
         private int? NextInput()
         {
-            if (Input.Count > 0)
-                return Input.Dequeue();
-            return null;
+            // If we already have some input queued, return it
+            if (_input.Count > 0)
+                return _input.Dequeue();
+            
+            // If we have a connected computer, try getting the input from there
+            var output = _inputRef?.NextOutput();
+            
+            // Then return
+            return output;
         }
 
         private void WriteOutput(int x)
         {
             Output.Enqueue(x);
+        }
+
+        public void QueueInput(int x)
+        {
+            _input.Enqueue(x);
+        }
+        
+        public void SetInput(IntcodeComputer other)
+        {
+            _input = other.Output;
+            _inputRef = other;
+        }
+
+        public int? NextOutput()
+        {
+            while (Output.Count == 0 && !Halted && !WaitingForInput) Step();
+            if (WaitingForInput)
+            {
+                Console.WriteLine($"[Err]: Computer is waiting for input. Possible deadlock. ({Name})");
+                return null;
+            }
+            if (Output.Count == 0) return null;
+            return Output.Dequeue();
         }
     }
 }
