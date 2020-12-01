@@ -1,11 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using AdventOfCode2020.Days;
 using Colorful;
 
 namespace AdventOfCode2020

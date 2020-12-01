@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace AdventOfCode2020.Days
+namespace AdventOfCode2020
 {
     /// <summary>
     ///     Advent of Code Day 1
@@ -12,7 +12,7 @@ namespace AdventOfCode2020.Days
         public override int RunPart1()
         {
             // Get the input as a sequence of integers
-            var ints = InputAsInts.ToArray();
+            var ints = InputAsInts();
 
             // Check each pair of numbers
             for (var i = 0; i < ints.Length; i++)
@@ -28,7 +28,7 @@ namespace AdventOfCode2020.Days
         public override int RunPart2()
         {
             // Get the input as a sequence of integers
-            var ints = InputAsInts.ToArray();
+            var ints = InputAsInts();
 
             // Stack 3 loops this time
             for (var i = 0; i < ints.Length; i++)

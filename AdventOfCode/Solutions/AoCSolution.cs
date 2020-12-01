@@ -25,13 +25,13 @@ namespace AdventOfCode2020
         /// <summary>
         ///     The day's input text, set by the Main method.
         /// </summary>
-        protected string Input { get; private set; }
-
-        /// <summary>
-        ///     Helper property to get the input as a sequence of integers separated by newlines
-        /// </summary>
-        protected IEnumerable<int> InputAsInts =>
-            Input.Split('\n').Where(x => !string.IsNullOrWhiteSpace(x)).Select(int.Parse);
+        protected string Input { get; }
+        
+        protected int[] InputAsInts(char sep = '\n') => Input.Split(sep)
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Select(int.Parse)
+            .ToArray();
+        
 
         /// <summary>
         ///     Executes the day's part 1 and returns the result

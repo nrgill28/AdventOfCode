@@ -359,5 +359,5 @@ MigrationBackup/
 # VS Code
 .vscode/
 
-AdventOfCode2020/Inputs/*
-!AdventOfCode2020/Inputs/placeholder.txt
+AdventOfCode/Inputs/*
+!AdventOfCode/Inputs/placeholder.txt

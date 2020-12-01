@@ -10,7 +10,7 @@
       <None Update="Inputs\input_day*.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Inputs\2020\input_day1.txt">
+      <None Update="Inputs\**\input_day*.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
