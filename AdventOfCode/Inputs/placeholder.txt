@@ -1,1 +1,1 @@
-Place your inputs here with the filename "input_day{day number}.txt"
+Place your inputs here with the filename "{year}/input_day{day number}.txt"

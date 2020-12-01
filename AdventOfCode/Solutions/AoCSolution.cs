@@ -31,23 +31,17 @@ namespace AdventOfCode
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .Select(int.Parse)
             .ToArray();
-        
+
 
         /// <summary>
         ///     Executes the day's part 1 and returns the result
         /// </summary>
-        public virtual int RunPart1()
-        {
-            return default;
-        }
+        public abstract int RunPart1();
 
         /// <summary>
         ///     Executes the day's part 2 and returns the result
         /// </summary>
-        public virtual int RunPart2()
-        {
-            return default;
-        }
+        public abstract int RunPart2();
 
         public static IEnumerable<AoCSolution> GetDays()
         {
