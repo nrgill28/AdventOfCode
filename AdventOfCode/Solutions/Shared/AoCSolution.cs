@@ -38,12 +38,12 @@ namespace AdventOfCode
         /// <summary>
         ///     Executes the day's part 1 and returns the result
         /// </summary>
-        public abstract int RunPart1();
+        public abstract object RunPart1();
 
         /// <summary>
         ///     Executes the day's part 2 and returns the result
         /// </summary>
-        public abstract int RunPart2();
+        public abstract object RunPart2();
 
         public static IEnumerable<AoCSolution> GetDays()
         {

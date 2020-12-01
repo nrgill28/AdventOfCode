@@ -8,7 +8,7 @@ namespace AdventOfCode
     {
         private readonly Dictionary<string, string> _map = new(); 
         
-        public override int RunPart1()
+        public override object RunPart1()
         {
             // Build the map
             _map.Add("COM", null);
@@ -22,7 +22,7 @@ namespace AdventOfCode
             return _map.Keys.Sum(CountOrbits);
         }
 
-        public override int RunPart2()
+        public override object RunPart2()
         {
             // Get the steps required for me to get to COM
             List<string> youToCom = new();

@@ -9,7 +9,7 @@ namespace AdventOfCode
     [AoCSolution(Day = 1, Year = 2020, Name = "Report Repair")]
     public class AoC2020Day1 : AoCSolution
     {
-        public override int RunPart1()
+        public override object RunPart1()
         {
             // Get the input as a sequence of integers
             var ints = InputAsInts();
@@ -25,7 +25,7 @@ namespace AdventOfCode
             return default;
         }
 
-        public override int RunPart2()
+        public override object RunPart2()
         {
             // Get the input as a sequence of integers
             var ints = InputAsInts();

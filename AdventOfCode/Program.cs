@@ -44,7 +44,7 @@ namespace AdventOfCode
             }
         }
 
-        private static int[] RunSolution(AoCSolution solution)
+        private static object[] RunSolution(AoCSolution solution)
         {
             return new[] {solution.RunPart1(), solution.RunPart2()};
         }

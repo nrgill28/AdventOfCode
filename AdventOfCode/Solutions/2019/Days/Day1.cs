@@ -5,13 +5,13 @@ namespace AdventOfCode
     [AoCSolution(Year = 2019, Day = 1, Name = "The Tyranny of the Rocket Equation")]
     public class AoC2019Day1 : AoCSolution
     {
-        public override int RunPart1()
+        public override object RunPart1()
         {
             var input = InputAsInts();
             return input.Sum(FuelRequired);
         }
 
-        public override int RunPart2()
+        public override object RunPart2()
         {
             var input = InputAsInts();
 

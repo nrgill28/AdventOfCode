@@ -3,7 +3,7 @@
     [AoCSolution(Year = 2019, Day = 2, Name = "Gravity Assist")]
     public class AoC2019Day2 : AoCSolution
     {
-        public override int RunPart1()
+        public override object RunPart1()
         {
             var computer = new IntcodeComputer(InputAsInts(','));
             computer.SetMemoryValue(1, 12);
@@ -12,7 +12,7 @@
             return computer.GetMemoryValue(0);
         }
 
-        public override int RunPart2()
+        public override object RunPart2()
         {
             var computer = new IntcodeComputer(InputAsInts(','));
             for (int noun = 0; noun < 100; noun++)

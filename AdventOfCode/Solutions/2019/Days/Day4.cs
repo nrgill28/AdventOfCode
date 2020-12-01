@@ -8,7 +8,7 @@ namespace AdventOfCode
     [AoCSolution(Year = 2019, Day = 4, Name = "Secure Container")]
     public class AoC2019Day4 : AoCSolution
     {
-        public override int RunPart1()
+        public override object RunPart1()
         {
             var inp = Input.Split('-').Select(int.Parse).ToArray();
             int min = inp[0], max = inp[1];
@@ -19,7 +19,7 @@ namespace AdventOfCode
             return range.Count();
         }
 
-        public override int RunPart2()
+        public override object RunPart2()
         {
             var inp = Input.Split('-').Select(int.Parse).ToArray();
             int min = inp[0], max = inp[1];

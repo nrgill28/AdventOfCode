@@ -7,7 +7,7 @@ namespace AdventOfCode
     [AoCSolution(Year = 2019, Day = 7, Name = "Amplification Circuit")]
     public class AoC2019Day7 : AoCSolution
     {
-        public override int RunPart1()
+        public override object RunPart1()
         {
             // Get the program and make 5 computers and chain their inputs / outputs
             var program = InputAsInts(',');
@@ -40,7 +40,7 @@ namespace AdventOfCode
             return max;
         }
 
-        public override int RunPart2()
+        public override object RunPart2()
         {
             // Get the program and make 5 computers and chain their inputs / outputs
             var program = InputAsInts(',');
