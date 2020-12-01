@@ -6,10 +6,10 @@
         public override int RunPart1()
         {
             var computer = new IntcodeComputer(InputAsInts(','));
-            computer.SetMemoryValueAt(1, 12);
-            computer.SetMemoryValueAt(2, 2);
+            computer.SetMemoryValue(1, 12);
+            computer.SetMemoryValue(2, 2);
             computer.RunUntilHalt();
-            return computer.GetMemoryValueAt(0);
+            return computer.GetMemoryValue(0);
         }
 
         public override int RunPart2()
@@ -19,11 +19,11 @@
             for (int verb = 0; verb < 100; verb++)
             {
                 computer.Reset();
-                computer.SetMemoryValueAt(1, noun);
-                computer.SetMemoryValueAt(2, verb);
+                computer.SetMemoryValue(1, noun);
+                computer.SetMemoryValue(2, verb);
                 computer.RunUntilHalt();
 
-                if (computer.GetMemoryValueAt(0) == 19690720)
+                if (computer.GetMemoryValue(0) == 19690720)
                     return 100 * noun + verb;
             }
 

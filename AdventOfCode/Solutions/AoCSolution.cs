@@ -32,6 +32,8 @@ namespace AdventOfCode
             .Select(int.Parse)
             .ToArray();
 
+        protected string[] InputAsLines => Input.Split('\n').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+
 
         /// <summary>
         ///     Executes the day's part 1 and returns the result
