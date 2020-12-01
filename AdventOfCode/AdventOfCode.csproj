@@ -3,14 +3,14 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>AdventOfCode2020</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Inputs" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="Inputs\input_day*.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Inputs\2020\input_day1.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

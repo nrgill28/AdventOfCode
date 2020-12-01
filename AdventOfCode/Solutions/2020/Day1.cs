@@ -6,7 +6,8 @@ namespace AdventOfCode2020.Days
     ///     Advent of Code Day 1
     ///     https://adventofcode.com/2020/day/1
     /// </summary>
-    public class Day1 : AoCDay
+    [AoCSolution(Day = 1, Year = 2020, Name = "Report Repair")]
+    public class AoC2020Day1 : AoCSolution
     {
         public override int RunPart1()
         {
