@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AdventOfCode
 {
+    /// <summary>
+    ///     Class to represent an Intcode Computer
+    /// </summary>
     public class IntcodeComputer
     {
-        private int[] _program;
-        private int[] _memory;
-        private int _ip = 0;
-        private int _clock;
+        private readonly int[] _program;
 
-        private IntcodeComputer _inputRef;
-
+        public readonly Queue<int> Output = new();
+        private bool _halted, _waitingForInput;
         private Queue<int> _input = new();
-        public Queue<int> Output = new();
+        private IntcodeComputer _inputRef;
+        private int _ip, _clock;
+        private int[] _memory;
 
-        public string Name;
-        
-        public bool Halted { get; private set; } = false;
-        public bool WaitingForInput { get; private set; } = false;
-        public int InstructionPointer => _ip;
+        public IntcodeComputer(int[] program, string name = null)
+        {
+            _program = program;
+            Reset();
+        }
 
+        /// <summary>
+        ///     Given the parameter and mode, get that value in memory
+        /// </summary>
         public int GetMemoryValue(int parameter, int mode = 0)
         {
             return mode switch
@@ -31,6 +35,10 @@ namespace AdventOfCode
                 _ => default
             };
         }
+
+        /// <summary>
+        ///     Given the parameter and mode, set that value in memory.
+        /// </summary>
         public void SetMemoryValue(int parameter, int value, int mode = 0)
         {
             switch (mode)
@@ -38,138 +46,152 @@ namespace AdventOfCode
                 case 0:
                     _memory[parameter] = value;
                     break;
+                case 1:
+                    throw new InvalidOperationException("You cannot set memory values in immediate mode!");
             }
         }
 
-        public IntcodeComputer(int[] program, string name = null)
-        {
-            _program = program;
-            Reset();
-            Name = name;
-        }
-
+        /// <summary>
+        ///     Continuously executes instructions until the computer halts or breaks due to missing input
+        /// </summary>
         public void RunUntilHalt()
         {
-            while (!Halted && !WaitingForInput) Step();
+            while (!_halted && !_waitingForInput) Step();
         }
 
-        public void Step()
+        /// <summary>
+        ///     Let the computer perform a step. This does not always mean it will execute an
+        ///     instruction, if the current operation is to retrieve input and there is none available
+        ///     the computer will pause execution.
+        /// </summary>
+        private void Step()
         {
-            int opcode = _memory[_ip] % 100,
-                mode1 = _memory[_ip] % 1000 / 100,
-                mode2 = _memory[_ip] % 10000 / 1000,
-                mode3 = _memory[_ip] / 10000;
+            var opcode = _memory[_ip] % 100;
+
+            int Param(int i)
+            {
+                return GetMemoryValue(_memory[_ip + 1 + i], _memory[_ip].DigitAt(2 + i));
+            }
+
+            void Result(int i, int v)
+            {
+                SetMemoryValue(_memory[_ip + 1 + i], v, _memory[_ip].DigitAt(2 + i));
+            }
+
             switch (opcode)
             {
                 case 1: // ADD
-                    var aOp1 = GetMemoryValue(_memory[_ip + 1], mode1);
-                    var aOp2 = GetMemoryValue(_memory[_ip + 2], mode2);
-                    SetMemoryValue(_memory[_ip + 3], aOp1 + aOp2, mode3);
+                    Result(2, Param(0) + Param(1));
                     _ip += 4;
                     break;
                 case 2: // MULTIPLY
-                    var mOp1 = GetMemoryValue(_memory[_ip + 1], mode1);
-                    var mOp2 = GetMemoryValue(_memory[_ip + 2], mode2);
-                    SetMemoryValue(_memory[_ip + 3], mOp1 * mOp2, mode3);
+                    Result(2, Param(0) * Param(1));
                     _ip += 4;
                     break;
                 case 3: // INPUT
                     var inp = NextInput();
-                    if (!inp.HasValue) WaitingForInput = true;
+                    _waitingForInput = !inp.HasValue;
+                    if (!inp.HasValue) return;
                     else
                     {
-                        WaitingForInput = false;
-                        SetMemoryValue(_memory[_ip + 1], inp.Value, mode1);
+                        Result(0, inp.Value);
                         _ip += 2;
+                        break;
                     }
-                    break;
                 case 4: // OUTPUT
-                    WriteOutput(GetMemoryValue(_memory[_ip + 1], mode1));
+                    Output.Enqueue(Param(0));
                     _ip += 2;
                     break;
                 case 5: // JUMP IF TRUE
-                    var eqOp1 = GetMemoryValue(_memory[_ip + 1], mode1);
-                    var eqOp2 = GetMemoryValue(_memory[_ip + 2], mode2);
-                    if (eqOp1 != 0) _ip = eqOp2;
+                    if (Param(0) != 0) _ip = Param(1);
                     else _ip += 3;
                     break;
                 case 6: // JUMP IF FALSE
-                    var neOp1 = GetMemoryValue(_memory[_ip + 1], mode1);
-                    var neOp2 = GetMemoryValue(_memory[_ip + 2], mode2);
-                    if (neOp1 == 0) _ip = neOp2;
+                    if (Param(0) == 0) _ip = Param(1);
                     else _ip += 3;
                     break;
                 case 7: // LESS THAN
-                    var ltOp1 = GetMemoryValue(_memory[_ip + 1], mode1);
-                    var ltOp2 = GetMemoryValue(_memory[_ip + 2], mode2);
-                    SetMemoryValue(_memory[_ip + 3], ltOp1 < ltOp2 ? 1 : 0, mode3);
+                    Result(2, Param(0) < Param(1) ? 1 : 0);
                     _ip += 4;
                     break;
                 case 8: // Equals
-                    var gtOp1 = GetMemoryValue(_memory[_ip + 1], mode1);
-                    var gtOp2 = GetMemoryValue(_memory[_ip + 2], mode2);
-                    SetMemoryValue(_memory[_ip + 3], gtOp1 == gtOp2 ? 1 : 0, mode3);
+                    Result(2, Param(0) == Param(1) ? 1 : 0);
                     _ip += 4;
                     break;
                 case 99: // HALT
-                    Halted = true;
+                    _halted = true;
                     break;
                 default: // INVALID
                     Console.WriteLine($"Invalid instruction {_memory[_ip]}! IP: {_ip}, CLK: {_clock}");
-                    Halted = true;
+                    _halted = true;
                     break;
             }
 
             _clock++;
         }
 
+        /// <summary>
+        ///     Resets the computer to it's initial state
+        /// </summary>
         public void Reset()
         {
             _memory = new int[_program.Length];
             _program.CopyTo(_memory, 0);
-            Halted = false;
+            _halted = false;
             _ip = 0;
             _clock = 0;
             _input.Clear();
         }
 
+        /// <summary>
+        ///     Tried to get the next input in the queue, or if we are using the output of another computer
+        ///     as input, running that program until it produces an output.
+        /// </summary>
+        /// <returns>The next input if available, otherwise null</returns>
         private int? NextInput()
         {
             // If we already have some input queued, return it
             if (_input.Count > 0)
                 return _input.Dequeue();
-            
+
             // If we have a connected computer, try getting the input from there
             var output = _inputRef?.NextOutput();
-            
+
             // Then return
             return output;
         }
 
-        private void WriteOutput(int x)
-        {
-            Output.Enqueue(x);
-        }
-
+        /// <summary>
+        ///     Adds a value to the input queue
+        /// </summary>
         public void QueueInput(int x)
         {
             _input.Enqueue(x);
         }
-        
+
+        /// <summary>
+        ///     This method is used to set the input of this computer to the output of another
+        /// </summary>
+        /// <param name="other">The other computer to use as input</param>
         public void SetInput(IntcodeComputer other)
         {
             _input = other.Output;
             _inputRef = other;
         }
 
+        /// <summary>
+        ///     Runs the computer until it has something in the output, then returns that value.
+        /// </summary>
+        /// <returns>The next available value in the output</returns>
         public int? NextOutput()
         {
-            while (Output.Count == 0 && !Halted && !WaitingForInput) Step();
-            if (WaitingForInput)
+            while (Output.Count == 0 && !_halted && !_waitingForInput) Step();
+            if (_waitingForInput)
             {
-                Console.WriteLine($"[Err]: Computer is waiting for input. Possible deadlock. ({Name})");
+                Console.WriteLine("[Err]: Computer is waiting for input. Possible deadlock.");
                 return null;
             }
+
             if (Output.Count == 0) return null;
             return Output.Dequeue();
         }

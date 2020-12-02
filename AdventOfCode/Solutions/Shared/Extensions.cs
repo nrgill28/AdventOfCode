@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AdventOfCode
 {
@@ -21,5 +22,7 @@ namespace AdventOfCode
                 }
             }
         }
+
+        internal static int DigitAt(this int i, int p) => (int) (i % Math.Pow(10, p + 1) / Math.Pow(10, p));
     }
 }

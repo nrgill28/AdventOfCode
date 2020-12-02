@@ -23,7 +23,7 @@ namespace AdventOfCode
 
         public override object RunPart2()
         {
-            
+            return default;
         }
     }
 }

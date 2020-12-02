@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace AdventOfCode
+﻿namespace AdventOfCode
 {
     /// <summary>
     ///     Advent of Code Day 1
