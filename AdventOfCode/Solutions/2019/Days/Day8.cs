@@ -9,15 +9,15 @@ namespace AdventOfCode
         private const int Width = 25;
         private const int Height = 6;
 
-        private string[] layers;
+        private string[] _layers;
 
         public override object RunPart1()
         {
-            layers = new string[Input.Length / (Width * Height)];
-            for (var i = 0; i < layers.Length; i++)
-                layers[i] = Input[(Width * Height * i)..(Width * Height * (i + 1))];
+            _layers = new string[Input.Length / (Width * Height)];
+            for (var i = 0; i < _layers.Length; i++)
+                _layers[i] = Input[(Width * Height * i)..(Width * Height * (i + 1))];
 
-            var l = layers.Aggregate((i, j) => i.Count(x => x == '0') < j.Count(x => x == '0') ? i : j);
+            var l = _layers.Aggregate((i, j) => i.Count(x => x == '0') < j.Count(x => x == '0') ? i : j);
             return l.Count(x => x == '1') * l.Count(x => x == '2');
         }
 

@@ -8,16 +8,16 @@ namespace AdventOfCode
     /// </summary>
     public class IntcodeComputer
     {
-        private readonly int[] _program;
+        private readonly long[] _program;
 
-        public readonly Queue<int> Output = new();
+        public readonly Queue<long> Output = new();
         private bool _halted, _waitingForInput;
-        private Queue<int> _input = new();
+        private Queue<long> _input = new();
         private IntcodeComputer _inputRef;
-        private int _ip, _clock;
-        private int[] _memory;
+        private long _ip, _rp, _clock;
+        private long[] _memory;
 
-        public IntcodeComputer(int[] program, string name = null)
+        public IntcodeComputer(long[] program, string name = null)
         {
             _program = program;
             Reset();
@@ -26,12 +26,13 @@ namespace AdventOfCode
         /// <summary>
         ///     Given the parameter and mode, get that value in memory
         /// </summary>
-        public int GetMemoryValue(int parameter, int mode = 0)
+        public long GetMemoryValue(long parameter, long mode = 0)
         {
             return mode switch
             {
                 0 => _memory[parameter],
                 1 => parameter,
+                2 => _memory[_rp + parameter],
                 _ => default
             };
         }
@@ -39,15 +40,20 @@ namespace AdventOfCode
         /// <summary>
         ///     Given the parameter and mode, set that value in memory.
         /// </summary>
-        public void SetMemoryValue(int parameter, int value, int mode = 0)
+        public void SetMemoryValue(long parameter, long value, long mode = 0)
         {
             switch (mode)
             {
                 case 0:
+                    if (parameter >= _memory.Length) GrowMemory(parameter + 1);
                     _memory[parameter] = value;
                     break;
                 case 1:
                     throw new InvalidOperationException("You cannot set memory values in immediate mode!");
+                case 2:
+                    if (_rp + parameter >= _memory.Length) GrowMemory(_rp + parameter + 1);
+                    _memory[_rp + parameter] = value;
+                    break;
             }
         }
 
@@ -67,16 +73,8 @@ namespace AdventOfCode
         private void Step()
         {
             var opcode = _memory[_ip] % 100;
-
-            int Param(int i)
-            {
-                return GetMemoryValue(_memory[_ip + 1 + i], _memory[_ip].DigitAt(2 + i));
-            }
-
-            void Result(int i, int v)
-            {
-                SetMemoryValue(_memory[_ip + 1 + i], v, _memory[_ip].DigitAt(2 + i));
-            }
+            long Param(int i) => GetMemoryValue(_memory[_ip + 1 + i], _memory[_ip].DigitAt(2 + i));
+            void Result(int i, long v) => SetMemoryValue(_memory[_ip + 1 + i], v, _memory[_ip].DigitAt(2 + i));
 
             switch (opcode)
             {
@@ -118,6 +116,10 @@ namespace AdventOfCode
                     Result(2, Param(0) == Param(1) ? 1 : 0);
                     _ip += 4;
                     break;
+                case 9:
+                    _rp += Param(0);
+                    _ip += 2;
+                    break;
                 case 99: // HALT
                     _halted = true;
                     break;
@@ -135,10 +137,11 @@ namespace AdventOfCode
         /// </summary>
         public void Reset()
         {
-            _memory = new int[_program.Length];
+            _memory = new long[_program.Length];
             _program.CopyTo(_memory, 0);
             _halted = false;
             _ip = 0;
+            _rp = 0;
             _clock = 0;
             _input.Clear();
         }
@@ -148,7 +151,7 @@ namespace AdventOfCode
         ///     as input, running that program until it produces an output.
         /// </summary>
         /// <returns>The next input if available, otherwise null</returns>
-        private int? NextInput()
+        private long? NextInput()
         {
             // If we already have some input queued, return it
             if (_input.Count > 0)
@@ -164,10 +167,7 @@ namespace AdventOfCode
         /// <summary>
         ///     Adds a value to the input queue
         /// </summary>
-        public void QueueInput(int x)
-        {
-            _input.Enqueue(x);
-        }
+        public void QueueInput(long x) => _input.Enqueue(x);
 
         /// <summary>
         ///     This method is used to set the input of this computer to the output of another
@@ -183,7 +183,7 @@ namespace AdventOfCode
         ///     Runs the computer until it has something in the output, then returns that value.
         /// </summary>
         /// <returns>The next available value in the output</returns>
-        public int? NextOutput()
+        public long? NextOutput()
         {
             while (Output.Count == 0 && !_halted && !_waitingForInput) Step();
             if (_waitingForInput)
@@ -194,6 +194,13 @@ namespace AdventOfCode
 
             if (Output.Count == 0) return null;
             return Output.Dequeue();
+        }
+
+        private void GrowMemory(long size)
+        {
+            var foo = new long[size];
+            _memory.CopyTo(foo, 0);
+            _memory = foo;
         }
     }
 }

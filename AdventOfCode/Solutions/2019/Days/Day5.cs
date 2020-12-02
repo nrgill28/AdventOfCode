@@ -7,7 +7,7 @@ namespace AdventOfCode
     {
         public override object RunPart1()
         {
-            var computer = new IntcodeComputer(InputAsInts(','));
+            var computer = new IntcodeComputer(InputAsIntcode);
             computer.QueueInput(1);
             computer.RunUntilHalt();
             return computer.Output.Last();
@@ -15,7 +15,7 @@ namespace AdventOfCode
 
         public override object RunPart2()
         {
-            var computer = new IntcodeComputer(InputAsInts(','));
+            var computer = new IntcodeComputer(InputAsIntcode);
             computer.QueueInput(5);
             computer.RunUntilHalt();
             return computer.Output.Last();

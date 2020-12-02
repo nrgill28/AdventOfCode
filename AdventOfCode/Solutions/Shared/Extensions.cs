@@ -24,5 +24,6 @@ namespace AdventOfCode
         }
 
         internal static int DigitAt(this int i, int p) => (int) (i % Math.Pow(10, p + 1) / Math.Pow(10, p));
+        internal static int DigitAt(this long i, int p) => (int) (i % Math.Pow(10, p + 1) / Math.Pow(10, p));
     }
 }

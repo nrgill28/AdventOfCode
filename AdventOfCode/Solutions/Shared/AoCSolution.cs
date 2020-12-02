@@ -31,6 +31,11 @@ namespace AdventOfCode
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .Select(int.Parse)
             .ToArray();
+        
+        protected long[] InputAsIntcode => Input.Split(',')
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Select(long.Parse)
+            .ToArray();
 
         protected string[] InputAsLines => Input.Split('\n').Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
 

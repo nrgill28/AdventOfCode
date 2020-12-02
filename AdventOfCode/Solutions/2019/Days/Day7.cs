@@ -10,7 +10,7 @@ namespace AdventOfCode
         public override object RunPart1()
         {
             // Get the program and make 5 computers and chain their inputs / outputs
-            var program = InputAsInts(',');
+            var program = InputAsIntcode;
             var computers = new IntcodeComputer[5];
             for (var i = 0; i < computers.Length; i++)
             {
@@ -19,7 +19,7 @@ namespace AdventOfCode
             }
 
             // With all the permutations of 0, 1, 2, 3, 4
-            var max = int.MinValue;
+            var max = long.MinValue;
             foreach (var perm in new List<int> {0, 1, 2, 3, 4}.GetPermutations())
             {
                 // Reset the computers and queue their phase setting
@@ -43,7 +43,7 @@ namespace AdventOfCode
         public override object RunPart2()
         {
             // Get the program and make 5 computers and chain their inputs / outputs
-            var program = InputAsInts(',');
+            var program = InputAsIntcode;
             var computers = new IntcodeComputer[5];
             for (var i = 0; i < computers.Length; i++)
             {
@@ -53,7 +53,7 @@ namespace AdventOfCode
             }
             
             // With all the permutations of 5, 6, 7, 8, 9
-            var max = int.MinValue;
+            var max = long.MinValue;
             foreach (var perm in new List<int> {5, 6, 7, 8, 9}.GetPermutations())
             {
                 // Reset the computers and give them their input setting

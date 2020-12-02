@@ -5,8 +5,7 @@
     {
         public override object RunPart1()
         {
-            var computer = new IntcodeComputer(InputAsInts(','));
-            computer.SetMemoryValue(1, 12);
+            var computer = new IntcodeComputer(InputAsIntcode);
             computer.SetMemoryValue(2, 2);
             computer.RunUntilHalt();
             return computer.GetMemoryValue(0);
@@ -14,7 +13,7 @@
 
         public override object RunPart2()
         {
-            var computer = new IntcodeComputer(InputAsInts(','));
+            var computer = new IntcodeComputer(InputAsIntcode);
             for (int noun = 0; noun < 100; noun++)
             for (int verb = 0; verb < 100; verb++)
             {
