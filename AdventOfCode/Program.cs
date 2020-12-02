@@ -25,7 +25,7 @@ namespace AdventOfCode
 
             var result = RunSolution(Days[year][day]);
             
-            Console.WriteLine($"Part 1: {result[0]}\nPart 2: {result[1]}");
+            Console.WriteLine($"Part 1: {result.Item1}\nPart 2: {result.Item2}");
             
         }
 
@@ -44,9 +44,9 @@ namespace AdventOfCode
             }
         }
 
-        private static object[] RunSolution(AoCSolution solution)
+        private static (object, object) RunSolution(AoCSolution solution)
         {
-            return new[] {solution.RunPart1(), solution.RunPart2()};
+            return (solution.RunPart1(), solution.RunPart2());
         }
     }
 }
