@@ -46,6 +46,7 @@ namespace AdventOfCode
 
         private static (object, object) RunSolution(AoCSolution solution)
         {
+            solution.Init();
             return (solution.RunPart1(), solution.RunPart2());
         }
     }

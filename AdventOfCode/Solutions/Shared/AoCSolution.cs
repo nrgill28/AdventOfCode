@@ -17,16 +17,16 @@ namespace AdventOfCode
         private const string InputPath = "Inputs/{0}/input_day{1}.txt";
         protected AoCSolution()
         {
-            var attrib = Attribute;
-            var path = string.Format(InputPath, attrib.Year, attrib.Day);
-            Input = File.ReadAllText(path);
+
         }
         
         /// <summary>
         ///     The day's input text, set by the Main method.
         /// </summary>
-        protected string Input { get; }
-        
+        protected string Input { get; set; }
+
+        protected virtual string DebugInput => null;
+
         protected int[] InputAsInts(char sep = '\n') => Input.Split(sep)
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .Select(int.Parse)
@@ -49,6 +49,19 @@ namespace AdventOfCode
         ///     Executes the day's part 2 and returns the result
         /// </summary>
         public abstract object RunPart2();
+
+        public virtual void Setup()
+        {
+            
+        }
+
+        public void Init()
+        {
+            var attrib = Attribute;
+            var path = string.Format(InputPath, attrib.Year, attrib.Day);
+            Input = DebugInput ?? File.ReadAllText(path);
+            Setup();
+        }
 
         public static IEnumerable<AoCSolution> GetDays()
         {
