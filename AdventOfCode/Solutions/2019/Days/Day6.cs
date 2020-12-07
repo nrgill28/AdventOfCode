@@ -4,7 +4,7 @@ using System.Linq;
 namespace AdventOfCode
 {
     [AoCSolution(Year = 2019, Day = 6, Name = "Universal Orbit Map")]
-    public class AoC2019Day6 : AoCSolution
+    public sealed class AoC2019Day6 : AoCSolution
     {
         private readonly Dictionary<string, string> _map = new(); 
         

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace AdventOfCode
 {
     [AoCSolution(Year = 2020, Day = 4, Name = "Passport Processing")]
-    public class AoC2020Day4 : AoCSolution
+    public sealed class AoC2020Day4 : AoCSolution
     {
         private static readonly Regex PassportRegex = new(@"(?:([a-z]{3}):([^ ]+)\s?)", RegexOptions.Compiled);
         private static readonly Regex HairColorRegex = new(@"#[0-9a-f]{6}", RegexOptions.Compiled);

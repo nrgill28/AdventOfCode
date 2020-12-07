@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 namespace AdventOfCode
 {
     [AoCSolution(Year = 2020, Day = 2, Name = "Password Philosophy")]
-    public class Day2 : AoCSolution
+    public sealed class Day2 : AoCSolution
     {
         private const string Pattern = @"^(\d*)-(\d*) (.): (.*)$";
         

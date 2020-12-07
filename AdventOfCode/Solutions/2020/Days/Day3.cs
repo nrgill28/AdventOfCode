@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCode
 {
     [AoCSolution(Year = 2020, Day = 3, Name = "Toboggan Trajectory")]
-    public class AoC2020Day3 : AoCSolution
+    public sealed class AoC2020Day3 : AoCSolution
     {
         private bool[,] _hill;
 

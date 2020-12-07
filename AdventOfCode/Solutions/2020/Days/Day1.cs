@@ -5,7 +5,7 @@
     ///     https://adventofcode.com/2020/day/1
     /// </summary>
     [AoCSolution(Day = 1, Year = 2020, Name = "Report Repair")]
-    public class AoC2020Day1 : AoCSolution
+    public sealed class AoC2020Day1 : AoCSolution
     {
         public override object RunPart1()
         {

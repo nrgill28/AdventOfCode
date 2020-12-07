@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCode
 {
-    [AoCSolution(Year = 2019, Day = 3, Name = "Crossed Wires")]
-    public sealed class AoC2019Day3 : AoCSolution
+    [AoCSolution(Year = 2020, Day = 7, Name = "")]
+    public sealed class AoC2020Day7 : AoCSolution
     {
         public override object RunPart1()
         {

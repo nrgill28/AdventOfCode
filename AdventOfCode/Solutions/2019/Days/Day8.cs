@@ -4,7 +4,7 @@ using System.Text;
 namespace AdventOfCode
 {
     [AoCSolution(Year = 2019, Day = 8, Name = "Space Image Format")]
-    public class AoC2019Day8 : AoCSolution
+    public sealed class AoC2019Day8 : AoCSolution
     {
         private const int Width = 25;
         private const int Height = 6;

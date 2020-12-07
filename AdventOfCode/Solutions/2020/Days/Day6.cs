@@ -3,7 +3,7 @@
 namespace AdventOfCode
 {
     [AoCSolution(Year = 2020, Day = 6, Name = "Custom Customs")]
-    public class AoC2020Day6 : AoCSolution
+    public sealed class AoC2020Day6 : AoCSolution
     {
         //protected override string DebugInput => "abc\n\na\nb\nc\n\nab\nac\n\na\na\na\na\n\nb";
 

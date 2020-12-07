@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCode
 {
     [AoCSolution(Year = 2019, Day = 2, Name = "Gravity Assist")]
-    public class AoC2019Day2 : AoCSolution
+    public sealed class AoC2019Day2 : AoCSolution
     {
         public override object RunPart1()
         {

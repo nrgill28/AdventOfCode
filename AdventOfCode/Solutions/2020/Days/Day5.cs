@@ -4,7 +4,7 @@ using System.Linq;
 namespace AdventOfCode
 {
     [AoCSolution(Year = 2020, Day = 5, Name = "Binary Boarding")]
-    public class AoC2020Day5 : AoCSolution
+    public sealed class AoC2020Day5 : AoCSolution
     {
         public override object RunPart1()
         {
