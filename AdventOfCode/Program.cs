@@ -23,9 +23,8 @@ namespace AdventOfCode
             if (!Days.ContainsKey(year) || Days[year][day] == null)
                 return;
 
-            var result = RunSolution(Days[year][day]);
-            
-            Console.WriteLine($"Part 1: {result.Item1}\nPart 2: {result.Item2}");
+            var (solution1, solution2) = RunSolution(Days[year][day]);
+            Console.WriteLine($"Part 1: {solution1}\nPart 2: {solution2}");
             
         }
 
