@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -30,6 +31,11 @@ namespace AdventOfCode
         protected int[] InputAsInts(char sep = '\n') => Input.Split(sep)
             .Where(x => !string.IsNullOrWhiteSpace(x))
             .Select(int.Parse)
+            .ToArray();
+
+        protected long[] InputAsLongs(char sep = '\n') => Input.Split(sep)
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Select(long.Parse)
             .ToArray();
         
         protected long[] InputAsIntcode => Input.Split(',')
@@ -74,7 +80,8 @@ namespace AdventOfCode
         public AoCSolutionAttribute Attribute => GetType().GetCustomAttributes(typeof(AoCSolutionAttribute), false)[0] as AoCSolutionAttribute;
     }
 
-    public class AoCSolutionAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class AoCSolutionAttribute : Attribute
     {
         public int Day { get; set; }
         public int Year { get; set; }
